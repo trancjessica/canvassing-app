@@ -25,4 +25,4 @@ async function main() {
   }
 }
 
-main();
+// main(); // Disabled to prevent automatic execution. Uncomment to run the smoke test.

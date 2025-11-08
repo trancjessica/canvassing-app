@@ -44,6 +44,8 @@ You can validate Prisma is working in your developer setup by running:
 node ./scripts/smoke.js
 ```
 
+Before running this command, make sure to uncomment the `main()` function in the file. 
+
 You should see a log like `Created: {... created note object ...}`. 
 
 #### Extending the Schema 
