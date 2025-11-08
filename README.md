@@ -3,6 +3,7 @@ A simple web application for canvassers to take and review notes about their int
 
 ## Tech Stack
 1. Frontend React (Next.js) with typescript
+1. Prisma for persistent storage
 
 ## Prerequisites 
 1. Node.js must be installed 
@@ -24,3 +25,36 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the home page. 
+
+## Development 
+To see the homepage of the application, simply run `npm run dev` and navigate to http://localhost:3000/
+
+
+### Prisma 
+To get started with Prisma, you can run: 
+```
+npx prisma generate
+```
+
+#### Validating your setup
+
+To validate that Prisma is working, I have created a "smoke" test. 
+You can validate Prisma is working in your developer setup by running: 
+```
+node ./scripts/smoke.js
+```
+
+You should see a log like `Created: {... created note object ...}`. 
+
+#### Extending the Schema 
+
+If you are attempting to extend the existing data schema, please note that you will need to migrate the existing data schema.
+
+You should run a command as follows:
+
+```
+npx prisma migrate dev --name <description of the changes>
+
+#### Debugging issues with Prisma
+You can run `npx risma studio` and inspect `dev.db` in the Web UI (localhost:3000). 
+```
