@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Note } from '@/types/note';
 import { NoteForm } from '@/components/NoteForm';
+import { NoteList } from '@/components/NoteList';
 
 /**
  * Main Home component rendering the canvassing notes page.
@@ -27,6 +28,7 @@ export default function Home() {
       <main className="mx-auto max-w-2xl space-y-8 px-4">
         <h1 className="text-3xl font-bold text-gray-900">Canvassing Notes</h1>
         <NoteForm onSubmit={handleAddNote} />
+        <NoteList notes={notes} />
       </main>
     </div>
   );
