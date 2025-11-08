@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Note } from '@/types/note';
 import { NoteForm } from '@/components/NoteForm';
 import { NoteList } from '@/components/NoteList';
@@ -10,17 +10,56 @@ import { NoteList } from '@/components/NoteList';
  */
 export default function Home() {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Function to handle adding a new note
-  const handleAddNote = (name: string, notes: string) => {
-    const newNote: Note = {
-      id: Date.now().toString(),
-      name,
-      notes,
-      timestamp: new Date().toISOString(),
-    };
-    // Keep track of notes in state
-    setNotes((prevNotes) => [newNote, ...prevNotes]);
+  const fetchNotes = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Fetch notes from the API endpoint
+      const res = await fetch('/api/notes');
+
+      if (!res.ok) throw new Error('Failed to fetch notes');
+
+      // Parse the JSON response
+      const data: Note[] = await res.json();
+
+      // Update state with fetched notes
+      setNotes(data);
+    } catch (err: any) {
+      setError(err.message || 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
+  // Function to handle adding a new note
+  const handleAddNote = async (name: string, noteContent: string) => {
+    setError(null);
+    try {
+      // Send POST request to create a new note
+      const res = await fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, notes: noteContent }),
+      });
+
+      if (!res.ok) throw new Error('Failed to create note');
+
+      // Get the created note from the response
+      const created: Note = await res.json();
+
+      // Update notes list with the newly created note
+      setNotes((prev) => [created, ...prev]);
+    } catch (err: any) {
+      setError(err.message || 'Failed to add note');
+    }
   };
 
   return (
