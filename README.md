@@ -36,18 +36,6 @@ To get started with Prisma, you can run:
 npx prisma generate
 ```
 
-#### Validating your setup
-
-To validate that Prisma is working, I have created a "smoke" test. 
-You can validate Prisma is working in your developer setup by running: 
-```
-node ./scripts/smoke.js
-```
-
-Before running this command, make sure to uncomment the `main()` function in the file. 
-
-You should see a log like `Created: {... created note object ...}`. 
-
 #### Extending the Schema 
 
 If you are attempting to extend the existing data schema, please note that you will need to migrate the existing data schema.
