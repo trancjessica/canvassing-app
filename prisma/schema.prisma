@@ -13,4 +13,5 @@ model Note {
   email     String?  // Optional email field
   notes     String
   timestamp DateTime @default(now())
+  updatedAt DateTime? @updatedAt // auto-updates whenever record changes
 }

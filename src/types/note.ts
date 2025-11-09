@@ -7,4 +7,5 @@ export interface Note {
   email?: string; // Optional email field
   notes: string;
   timestamp: string;
+  updatedAt?: string; 
 }
