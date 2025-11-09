@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 interface NoteFormProps {
-  onSubmit: (name: string, notes: string) => void;
+  onSubmit: (name: string, email: string | null, notes: string) => void;
   isSubmitting?: boolean;
 }
 
@@ -12,6 +12,7 @@ interface NoteFormProps {
  */
 export function NoteForm({ onSubmit, isSubmitting = false }: NoteFormProps) {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [notes, setNotes] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,10 +22,12 @@ export function NoteForm({ onSubmit, isSubmitting = false }: NoteFormProps) {
 
     // Use trim to remove trailing whitespaces
     if (name.trim() && notes.trim()) {
-      onSubmit(name, notes);
+      // Pass null if email is empty, otherwise pass the trimmed email
+      onSubmit(name, email.trim() || null, notes);
 
       // Clear form fields after submission
       setName('');
+      setEmail('');
       setNotes('');
     }
   };
@@ -43,6 +46,19 @@ export function NoteForm({ onSubmit, isSubmitting = false }: NoteFormProps) {
             onChange={(e) => setName(e.target.value)}
             className="mt-1 w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
             placeholder="Enter resident's name"
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email (optional)
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
+            placeholder="Enter resident's email"
           />
         </div>
         <div>

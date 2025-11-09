@@ -16,7 +16,12 @@ export function NoteList({ notes }: NoteListProps) {
           className="group rounded-lg bg-white p-6 transition-all hover:bg-gray-50"
         >
           <div className="flex items-start justify-between">
-            <h3 className="font-medium text-gray-900">{note.name}</h3>
+            <div>
+              <h3 className="font-medium text-gray-900">{note.name}</h3>
+              {note.email && (
+                <p className="mt-1 text-sm text-gray-500">{note.email}</p>
+              )}
+            </div>
             <time className="text-sm text-gray-500">
               {new Date(note.timestamp).toLocaleDateString('en-US', {
                 month: 'short',
