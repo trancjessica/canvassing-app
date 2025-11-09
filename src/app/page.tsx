@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { NoteForm } from '@/components/NoteForm';
 
-
 /**
  * Main Home component rendering the canvassing notes page.
  */
@@ -26,7 +25,6 @@ export default function Home() {
 
       if (!res.ok) throw new Error('Failed to create note');
       
-      // Navigate to notes list after successful creation
       router.push('/notes');
     } catch (err: any) {
       setError(err.message || 'Failed to add note');
@@ -37,18 +35,28 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      {/* Modern Header */}
+      <header className="bg-blue-600 text-white py-10 shadow-md">
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight">Canvassing Connect</h1>
+          <p className="mt-2 text-lg text-blue-100">
+            Connecting communities, one conversation at a time
+          </p>
+        </div>
+      </header>
+
       <main className="mx-auto max-w-2xl px-4 py-12">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Add New Note</h1>
+          <h2 className="text-2xl font-semibold text-gray-900">Add New Note</h2>
           <Link
             href="/notes"
-            className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-200"
+            className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200"
           >
             View All Notes
           </Link>
         </div>
 
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="rounded-lg bg-white p-6 shadow-md">
           {error && (
             <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-800">
               {error}
