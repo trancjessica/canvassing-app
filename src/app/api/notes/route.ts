@@ -11,6 +11,7 @@ export async function GET() {
   const payload = notes.map((n) => ({
     id: n.id,
     name: n.name,
+    email: n.email,
     notes: n.notes,
     timestamp: n.timestamp.toISOString(),
   }));
@@ -24,7 +25,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, notes } = body;
+    const { name, email, notes } = body;
     if (!name || !notes) {
       // Return 400 if name or notes is missing
       return new NextResponse(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
     const created = await prisma.note.create({
       data: {
         name,
+        email: email || null,  // Use null if email is not provided
         notes,
         timestamp: new Date(),
       },
@@ -42,6 +44,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       id: created.id,
       name: created.name,
+      email: created.email,
       notes: created.notes,
       timestamp: created.timestamp.toISOString(),
     });
