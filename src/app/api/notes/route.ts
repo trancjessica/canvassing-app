@@ -108,6 +108,8 @@ export async function PATCH(request: Request) {
       email: updated.email,
       notes: updated.notes,
       timestamp: updated.timestamp.toISOString(),
+      // It is possible that updatedAt is null if the field was never updated after creation
+      updatedAt: updated.updatedAt ? updated.updatedAt.toISOString() : null,
     });
   } catch (err) {
     console.error(err);
