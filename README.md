@@ -44,7 +44,7 @@ You should run a command as follows:
 
 ```
 npx prisma migrate dev --name <description of the changes>
+```
 
 #### Debugging issues with Prisma
 You can run `npx risma studio` and inspect `dev.db` in the Web UI (localhost:3000). 
-```
