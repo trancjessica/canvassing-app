@@ -9,16 +9,28 @@ interface NoteListProps {
  */
 export function NoteList({ notes }: NoteListProps) {
   return (
-    <div className="w-full space-y-4">
+    <div className="divide-y divide-gray-200">
       {notes.map((note) => (
         <div
           key={note.id}
-          className="rounded-md border border-gray-200 p-4 hover:border-gray-300"
+          className="group rounded-lg bg-white p-6 transition-all hover:bg-gray-50"
         >
-          <h3 className="font-medium text-gray-900">{note.name}</h3>
-          <p className="mt-2 text-gray-800">{note.notes}</p>
-          <p className="mt-2 text-sm text-gray-500">
-            {new Date(note.timestamp).toLocaleString()}
+          <div className="flex items-start justify-between">
+            <h3 className="font-medium text-gray-900">{note.name}</h3>
+            <time className="text-sm text-gray-500">
+              {new Date(note.timestamp).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </time>
+          </div>
+          <p className="mt-2 text-gray-700">{note.notes}</p>
+          <p className="mt-2 text-xs text-gray-500">
+            {new Date(note.timestamp).toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+            })}
           </p>
         </div>
       ))}
