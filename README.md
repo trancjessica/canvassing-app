@@ -1,5 +1,5 @@
 # Canvassing Web Application 
-A simple web application for canvassers to take and review notes about their interactions.
+A simple web application for canvassers to take and review notes about their interactions
 
 ## Tech Stack
 1. Frontend React (Next.js) with typescript
