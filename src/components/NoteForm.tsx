@@ -4,12 +4,13 @@ import { useState } from 'react';
 
 interface NoteFormProps {
   onSubmit: (name: string, notes: string) => void;
+  isSubmitting?: boolean;
 }
 
 /**
  * NoteForm component for adding new canvassing notes.
  */
-export function NoteForm({ onSubmit }: NoteFormProps) {
+export function NoteForm({ onSubmit, isSubmitting = false }: NoteFormProps) {
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
 
@@ -60,9 +61,14 @@ export function NoteForm({ onSubmit }: NoteFormProps) {
       </div>
       <button
         type="submit"
-        className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none"
+        disabled={isSubmitting}
+        className={`rounded-md px-4 py-2 text-white transition-colors focus:outline-none ${
+          isSubmitting
+            ? 'bg-blue-400 cursor-not-allowed'
+            : 'bg-blue-500 hover:bg-blue-600'
+        }`}
       >
-        Add Note
+        {isSubmitting ? 'Adding Note...' : 'Add Note'}
       </button>
     </form>
   );
