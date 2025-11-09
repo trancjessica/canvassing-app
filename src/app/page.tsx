@@ -1,49 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Note } from '@/types/note';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { NoteForm } from '@/components/NoteForm';
-import { NoteList } from '@/components/NoteList';
 
-/**
- * Main Home component rendering the canvassing notes page.
- */
+
 export default function Home() {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
-  // Function to handle adding a new note
-  const fetchNotes = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      // Fetch notes from the API endpoint
-      const res = await fetch('/api/notes');
-
-      if (!res.ok) throw new Error('Failed to fetch notes');
-
-      // Parse the JSON response
-      const data: Note[] = await res.json();
-
-      // Update state with fetched notes
-      setNotes(data);
-    } catch (err: any) {
-      setError(err.message || 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  // Function to handle adding a new note
   const handleAddNote = async (name: string, noteContent: string) => {
     setError(null);
+    setIsSubmitting(true);
     try {
-      // Send POST request to create a new note
       const res = await fetch('/api/notes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -51,23 +22,45 @@ export default function Home() {
       });
 
       if (!res.ok) throw new Error('Failed to create note');
-
-      // Get the created note from the response
-      const created: Note = await res.json();
-
-      // Update notes list with the newly created note
-      setNotes((prev) => [created, ...prev]);
+      
+      // Navigate to notes list after successful creation
+      router.push('/notes');
     } catch (err: any) {
       setError(err.message || 'Failed to add note');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <main className="mx-auto max-w-2xl space-y-8 px-4">
-        <h1 className="text-3xl font-bold text-gray-900">Canvassing Notes</h1>
-        <NoteForm onSubmit={handleAddNote} />
-        <NoteList notes={notes} />
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <main className="mx-auto max-w-2xl px-4 py-12">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-900">Add New Note</h1>
+          <Link
+            href="/notes"
+            className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-200"
+          >
+            View All Notes
+          </Link>
+        </div>
+
+        <div className="rounded-lg bg-white p-6 shadow-sm">
+          {error && (
+            <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-800">
+              {error}
+            </div>
+          )}
+          
+          <NoteForm onSubmit={handleAddNote} isSubmitting={isSubmitting} />
+        </div>
+
+        <div className="mt-8 text-center text-sm text-gray-500">
+          View all your canvassing notes in the{" "}
+          <Link href="/notes" className="text-blue-500 hover:text-blue-600">
+            notes list
+          </Link>
+        </div>
       </main>
     </div>
   );
