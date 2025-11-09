@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Note } from '@/types/note';
 import { NoteList } from '@/components/NoteList';
 import Link from 'next/link';
+import { SiteHeader } from '@/components/SiteHeader';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -31,6 +32,7 @@ export default function NotesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SiteHeader />
       <main className="mx-auto max-w-2xl px-4 py-8">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">Canvassing Notes</h1>

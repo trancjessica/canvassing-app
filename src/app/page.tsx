@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { NoteForm } from '@/components/NoteForm';
+import { SiteHeader } from '@/components/SiteHeader';
 
 /**
  * Main Home component rendering the canvassing notes page.
@@ -35,15 +36,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      {/* Modern Header */}
-      <header className="bg-blue-600 text-white py-10 shadow-md">
-        <div className="mx-auto max-w-2xl px-4 text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight">Canvassing Connect</h1>
-          <p className="mt-2 text-lg text-blue-100">
-            Connecting communities, one conversation at a time
-          </p>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="mx-auto max-w-2xl px-4 py-12">
         <div className="mb-8 flex items-center justify-between">
