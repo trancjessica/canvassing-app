@@ -10,6 +10,7 @@ datasource db {
 model Note {
   id        String   @id @default(cuid())
   name      String
+  email     String?  // Optional email field
   notes     String
   timestamp DateTime @default(now())
 }
