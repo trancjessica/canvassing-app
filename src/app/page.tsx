@@ -6,19 +6,22 @@ import Link from 'next/link';
 import { NoteForm } from '@/components/NoteForm';
 
 
+/**
+ * Main Home component rendering the canvassing notes page.
+ */
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleAddNote = async (name: string, noteContent: string) => {
+  const handleAddNote = async (name: string, email: string | null, noteContent: string) => {
     setError(null);
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/notes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, notes: noteContent }),
+        body: JSON.stringify({ name, email, notes: noteContent }),
       });
 
       if (!res.ok) throw new Error('Failed to create note');
