@@ -1,17 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 
 /**
  * Learn Page component rendering information about the app.
  */
 export default function Learn() {
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
