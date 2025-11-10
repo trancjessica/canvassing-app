@@ -1,70 +1,42 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { NoteForm } from '@/components/NoteForm';
 import { SiteHeader } from '@/components/SiteHeader';
 
-/**
- * Main Home component rendering the canvassing notes page.
- */
 export default function Home() {
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-
-  const handleAddNote = async (name: string, email: string | null, noteContent: string) => {
-    setError(null);
-    setIsSubmitting(true);
-    try {
-      const res = await fetch('/api/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, notes: noteContent }),
-      });
-
-      if (!res.ok) throw new Error('Failed to create note');
-      
-      router.push('/notes');
-    } catch (err: any) {
-      setError(err.message || 'Failed to add note');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <SiteHeader />
 
-      <main className="mx-auto max-w-2xl px-4 py-12">
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-gray-900">Add New Note</h2>
+      <main className="mx-auto max-w-3xl px-6 py-16 text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">
+          Welcome to Canvassing Connect
+        </h1>
+        <p className="text-lg text-gray-700 mb-10">
+          Canvassing Connect helps volunteers and organizers easily log, manage, and share notes from field
+          interactions. Whether you’re running a local campaign or community outreach effort, this tool keeps
+          your conversations organized and accessible in one place.
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/notes/new"
+            className="rounded-md bg-blue-600 px-6 py-3 text-white font-medium hover:bg-blue-700 transition"
+          >
+            Add a New Note
+          </Link>
+
           <Link
             href="/notes"
-            className="rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200"
+            className="rounded-md bg-gray-100 px-6 py-3 text-gray-700 font-medium hover:bg-gray-200 transition"
           >
             View All Notes
           </Link>
         </div>
 
-        <div className="rounded-lg bg-white p-6 shadow-md">
-          {error && (
-            <div className="mb-6 rounded-md bg-red-50 p-4 text-sm text-red-800">
-              {error}
-            </div>
-          )}
-          
-          <NoteForm onSubmit={handleAddNote} isSubmitting={isSubmitting} />
-        </div>
-
-        <div className="mt-8 text-center text-sm text-gray-500">
-          View all your canvassing notes in the{" "}
-          <Link href="/notes" className="text-blue-500 hover:text-blue-600">
-            notes list
-          </Link>
-        </div>
+        <section className="mt-16 text-gray-500 text-sm">
+          Built with Next.js and a passion for civic tech.
+        </section>
       </main>
     </div>
   );
